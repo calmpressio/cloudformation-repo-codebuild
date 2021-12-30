@@ -1,1 +1,1 @@
-# stack_calm_codebuild
+Cloudformation template to create codebuild with admin permissions and manual trigguer
