@@ -4,7 +4,7 @@ Parameters:
     Description: URL for GitHub repo i.e. https://github.com/username/repository
   GitHubToken:
     Type: String
-    Description: Webhook Github Token
+    Description: Access Github Token
 
 Resources:
   CodeBuildCredentials:
