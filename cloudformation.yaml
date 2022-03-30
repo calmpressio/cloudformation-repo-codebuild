@@ -5,15 +5,9 @@ Parameters:
  # GitHubToken:
  #   Type: String
  #   Description: Access Github Token
- StackName:
-  Type: String
-  Description: Stack Name CDK
- StackAccount:
-  Type: String
-  Description: Stack Account CDK
- StackRegion:
-  Type: String
-  Description: Stack Region CDK  
+  StackName:
+    Type: String
+    Description: Stack Name CDK
 
 Resources:
  # CodeBuildCredentials:
@@ -39,7 +33,7 @@ Resources:
         - arn:aws:iam::aws:policy/AdministratorAccess
   CodeBuild:
     Type: AWS::CodeBuild::Project
-    Properties:
+    Properties: 
       Name: !Ref AWS::StackName
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
@@ -53,10 +47,10 @@ Resources:
             Value: !Ref StackName
             Type: PLAINTEXT
           - Name: StackAccount
-            Value: !Ref StackAccount
+            Value: !Ref AWS::AccountId
             Type: PLAINTEXT
           - Name: StackRegion
-            Value: !Ref StackRegion
+            Value: !Ref AWS::Region
             Type: PLAINTEXT
       Source:
         BuildSpec: buildspec.yaml
