@@ -5,6 +5,15 @@ Parameters:
  # GitHubToken:
  #   Type: String
  #   Description: Access Github Token
+ StackName:
+  Type: String
+  Description: Stack Name CDK
+ StackAccount:
+  Type: String
+  Description: Stack Account CDK
+ StackRegion:
+  Type: String
+  Description: Stack Region CDK  
 
 Resources:
  # CodeBuildCredentials:
@@ -39,10 +48,16 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_LARGE 
         Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
-        #EnvironmentVariables:
-        #  - Name: MY_ENV_VAR
-        #    Value: something
-        #    Type: PLAINTEXT
+        EnvironmentVariables:
+          - Name: StackName
+            Value: !Ref StackName
+            Type: PLAINTEXT
+          - Name: StackAccount
+            Value: !Ref StackAccount
+            Type: PLAINTEXT
+          - Name: StackRegion
+            Value: !Ref StackRegion
+            Type: PLAINTEXT
       Source:
         BuildSpec: buildspec.yaml
         Type: GITHUB
@@ -53,6 +68,7 @@ Resources:
     Properties:
       LogGroupName: !Sub "/aws/codebuild/${CodeBuild}"
       RetentionInDays: 7
+    DependsOn : CodeBuild
 
 Outputs:
   ProjectName:
