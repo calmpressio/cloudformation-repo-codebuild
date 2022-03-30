@@ -2,17 +2,17 @@ Parameters:
   GitHubRepo:
     Type: String
     Description: URL for GitHub repo i.e. https://github.com/username/repository
-  GitHubToken:
-    Type: String
-    Description: Access Github Token
+ # GitHubToken:
+ #   Type: String
+ #   Description: Access Github Token
 
 Resources:
-  CodeBuildCredentials:
-    Type: AWS::CodeBuild::SourceCredential
-    Properties:
-      ServerType: GITHUB
-      AuthType: PERSONAL_ACCESS_TOKEN
-      Token: !Ref GitHubToken
+ # CodeBuildCredentials:
+ #   Type: AWS::CodeBuild::SourceCredential
+ #   Properties:
+ #     ServerType: GITHUB
+ #     AuthType: PERSONAL_ACCESS_TOKEN
+ #     Token: !Ref GitHubToken
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -31,6 +31,7 @@ Resources:
   CodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
+      Name: !Ref AWS::StackName
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
         Type: NO_ARTIFACTS
