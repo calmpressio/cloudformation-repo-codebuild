@@ -2,20 +2,20 @@ Parameters:
   GitHubRepo:
     Type: String
     Description: URL for GitHub repo i.e. https://github.com/username/repository
- # GitHubToken:
- #   Type: String
- #   Description: Access Github Token
+  GitHubToken:
+    Type: String
+    Description: Access Github Token
   StackName:
     Type: String
     Description: Stack Name CDK
 
 Resources:
- # CodeBuildCredentials:
- #   Type: AWS::CodeBuild::SourceCredential
- #   Properties:
- #     ServerType: GITHUB
- #     AuthType: PERSONAL_ACCESS_TOKEN
- #     Token: !Ref GitHubToken
+  CodeBuildCredentials:
+    Type: AWS::CodeBuild::SourceCredential
+    Properties:
+      ServerType: GITHUB
+      AuthType: PERSONAL_ACCESS_TOKEN
+      Token: !Ref GitHubToken
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
