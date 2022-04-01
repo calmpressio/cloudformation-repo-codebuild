@@ -7,7 +7,7 @@ Parameters:
     Description: Access Github Token
   StackName:
     Type: String
-    Description: Stack Name CDK
+    Description: Example: CDKInternal
 
 Resources:
   CodeBuildCredentials:
@@ -38,10 +38,14 @@ Resources:
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
         Type: NO_ARTIFACTS
+      Cache:
+        Modes: 
+          - LOCAL_CUSTOM_CACHE
+        Type: LOCAL
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_LARGE 
-        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        Image: aws/codebuild/standard:5.0
         EnvironmentVariables:
           - Name: StackName
             Value: !Ref StackName
