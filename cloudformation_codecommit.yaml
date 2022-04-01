@@ -8,7 +8,7 @@ Resources:
     Type: AWS::CodeCommit::Repository
     DeletionPolicy: Retain
     Properties:
-      RepositoryName: !Ref AWS::StackName
+      RepositoryName: !Ref StackName
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
