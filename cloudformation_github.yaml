@@ -50,12 +50,6 @@ Resources:
           - Name: StackName
             Value: !Ref StackName
             Type: PLAINTEXT
-          - Name: StackAccount
-            Value: !Ref AWS::AccountId
-            Type: PLAINTEXT
-          - Name: StackRegion
-            Value: !Ref AWS::Region
-            Type: PLAINTEXT
       Source:
         BuildSpec: buildspec.yaml
         Type: GITHUB
