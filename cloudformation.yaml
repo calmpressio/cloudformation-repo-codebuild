@@ -7,7 +7,7 @@ Parameters:
     Description: Github Token Repo Access
   StackName:
     Type: String
-    Description: Example, cdkInternal
+    Description: Example, cdk-internal
 
 Resources:
   CodeBuildCredentials:
