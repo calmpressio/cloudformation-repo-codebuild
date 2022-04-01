@@ -1,0 +1,31 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "codecommit:Merge*",
+                "codecommit:TagResource",
+                "codecommit:BatchAssociateApprovalRuleTemplateWithRepositories",
+                "codecommit:BatchGet*",
+                "codecommit:GitPull",
+                "codecommit:UntagResource",
+                "codecommit:BatchDisassociateApprovalRuleTemplateFromRepositories",
+                "codecommit:OverridePullRequestApprovalRules",
+                "codecommit:Post*",
+                "codecommit:EvaluatePullRequestApprovalRules",
+                "codecommit:Test*",
+                "codecommit:DisassociateApprovalRuleTemplateFromRepository",
+                "codecommit:Describe*",
+                "codecommit:Put*",
+                "codecommit:GitPush",
+                "codecommit:DeleteFile",
+                "codecommit:BatchDescribe*",
+                "codecommit:AssociateApprovalRuleTemplateWithRepository",
+                "codecommit:DeleteBranch"
+            ],
+            "Resource": "arn:aws:codecommit:REGION:711585979393:REPOSITORY"
+        }
+    ]
+}
