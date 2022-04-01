@@ -1,21 +1,17 @@
 Parameters:
-  GitHubRepo:
-    Type: String
-    Description: Github Repo URL
   GitHubToken:
     Type: String
     Description: Github Token Repo Access
   StackName:
     Type: String
     Description: Example, cdk-internal
-
+    
 Resources:
-  CodeBuildCredentials:
-    Type: AWS::CodeBuild::SourceCredential
+  Repo:
+    Type: AWS::CodeCommit::Repository
+    DeletionPolicy: Retain
     Properties:
-      ServerType: GITHUB
-      AuthType: PERSONAL_ACCESS_TOKEN
-      Token: !Ref GitHubToken
+      RepositoryName: !Ref AWS::StackName
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -33,6 +29,7 @@ Resources:
         - arn:aws:iam::aws:policy/AdministratorAccess
   CodeBuild:
     Type: AWS::CodeBuild::Project
+    DependsOn: CodeBuildRole
     Properties: 
       Name: !Ref AWS::StackName
       ServiceRole: !GetAtt CodeBuildRole.Arn
@@ -50,16 +47,16 @@ Resources:
           - Name: StackName
             Value: !Ref StackName
             Type: PLAINTEXT
-          - Name: StackAccount
-            Value: !Ref AWS::AccountId
-            Type: PLAINTEXT
-          - Name: StackRegion
-            Value: !Ref AWS::Region
-            Type: PLAINTEXT
       Source:
-        BuildSpec: buildspec.yaml
-        Type: GITHUB
-        Location: !Ref GitHubRepo
+         BuildSpec: buildspec.yaml
+        Type: CODECOMMIT
+        Location:
+          Fn::Join:
+            - ""
+            - - "https://git-codecommit."
+              - Ref: AWS::Region
+              - ".amazonaws.com/v1/repos/"
+              - !Ref AWS::StackName
       TimeoutInMinutes: 15
   CodeBuildLogGroup:
     Type: AWS::Logs::LogGroup
