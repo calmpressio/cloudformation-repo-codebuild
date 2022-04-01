@@ -8,3 +8,4 @@
 - Buildspec autodetect
 - node_modules cache enabled
 - Enviroment latest ubuntu, Large (15 GB RAM, 8 VCPUs)
+- Envs to ask CDK Project name and autoconfig AWS account name, region and account ID
