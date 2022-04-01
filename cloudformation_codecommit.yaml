@@ -1,0 +1,74 @@
+Parameters:
+  GitHubRepo:
+    Type: String
+    Description: Github Repo URL
+  GitHubToken:
+    Type: String
+    Description: Github Token Repo Access
+  StackName:
+    Type: String
+    Description: Example, cdk-internal
+
+Resources:
+  CodeBuildCredentials:
+    Type: AWS::CodeBuild::SourceCredential
+    Properties:
+      ServerType: GITHUB
+      AuthType: PERSONAL_ACCESS_TOKEN
+      Token: !Ref GitHubToken
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+            - Effect: Allow
+              Principal:
+                  Service:
+                    - codebuild.amazonaws.com
+              Action:
+                - sts:AssumeRole
+      Path: '/'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+  CodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties: 
+      Name: !Ref AWS::StackName
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Cache:
+        Modes: 
+          - LOCAL_CUSTOM_CACHE
+        Type: LOCAL
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_LARGE 
+        Image: aws/codebuild/standard:5.0
+        EnvironmentVariables:
+          - Name: StackName
+            Value: !Ref StackName
+            Type: PLAINTEXT
+          - Name: StackAccount
+            Value: !Ref AWS::AccountId
+            Type: PLAINTEXT
+          - Name: StackRegion
+            Value: !Ref AWS::Region
+            Type: PLAINTEXT
+      Source:
+        BuildSpec: buildspec.yaml
+        Type: GITHUB
+        Location: !Ref GitHubRepo
+      TimeoutInMinutes: 15
+  CodeBuildLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/codebuild/${CodeBuild}"
+      RetentionInDays: 7
+    DependsOn : CodeBuild
+
+Outputs:
+  ProjectName:
+    Value: !Ref CodeBuild
+    Description: CodeBuild project name
