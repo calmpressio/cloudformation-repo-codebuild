@@ -1,10 +1,10 @@
 Parameters:
   GitHubRepo:
     Type: String
-    Description: URL for GitHub repo i.e. https://github.com/username/repository
+    Description: Github Repo URL
   GitHubToken:
     Type: String
-    Description: Access Github Token
+    Description: Github Token Repo Access
   StackName:
     Type: String
     Description: Example: CDKInternal
