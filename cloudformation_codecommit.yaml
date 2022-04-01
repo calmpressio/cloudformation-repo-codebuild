@@ -1,7 +1,4 @@
 Parameters:
-  GitHubToken:
-    Type: String
-    Description: Github Token Repo Access
   StackName:
     Type: String
     Description: Example, cdk-internal
@@ -48,7 +45,7 @@ Resources:
             Value: !Ref StackName
             Type: PLAINTEXT
       Source:
-         BuildSpec: buildspec.yaml
+        BuildSpec: buildspec.yaml
         Type: CODECOMMIT
         Location:
           Fn::Join:
